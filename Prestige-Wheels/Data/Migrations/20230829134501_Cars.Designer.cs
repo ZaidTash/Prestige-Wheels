@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Prestige_Wheels.Data;
 
@@ -11,9 +12,11 @@ using Prestige_Wheels.Data;
 namespace Prestige_Wheels.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230829134501_Cars")]
+    partial class Cars
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -243,9 +246,6 @@ namespace Prestige_Wheels.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ManufacturerId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Model")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -255,29 +255,7 @@ namespace Prestige_Wheels.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ManufacturerId");
-
                     b.ToTable("Cars");
-                });
-
-            modelBuilder.Entity("Prestige_Wheels.Data.Entities.Manufacturer", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Year")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Manufacturers");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -329,20 +307,6 @@ namespace Prestige_Wheels.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Prestige_Wheels.Data.Entities.Car", b =>
-                {
-                    b.HasOne("Prestige_Wheels.Data.Entities.Manufacturer", "Manufacturer")
-                        .WithMany("Cars")
-                        .HasForeignKey("ManufacturerId");
-
-                    b.Navigation("Manufacturer");
-                });
-
-            modelBuilder.Entity("Prestige_Wheels.Data.Entities.Manufacturer", b =>
-                {
-                    b.Navigation("Cars");
                 });
 #pragma warning restore 612, 618
         }

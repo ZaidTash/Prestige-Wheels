@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Prestige_Wheels.Data;
 
@@ -11,9 +12,11 @@ using Prestige_Wheels.Data;
 namespace Prestige_Wheels.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230830130655_Manufacturers")]
+    partial class Manufacturers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -333,11 +336,9 @@ namespace Prestige_Wheels.Data.Migrations
 
             modelBuilder.Entity("Prestige_Wheels.Data.Entities.Car", b =>
                 {
-                    b.HasOne("Prestige_Wheels.Data.Entities.Manufacturer", "Manufacturer")
+                    b.HasOne("Prestige_Wheels.Data.Entities.Manufacturer", null)
                         .WithMany("Cars")
                         .HasForeignKey("ManufacturerId");
-
-                    b.Navigation("Manufacturer");
                 });
 
             modelBuilder.Entity("Prestige_Wheels.Data.Entities.Manufacturer", b =>
